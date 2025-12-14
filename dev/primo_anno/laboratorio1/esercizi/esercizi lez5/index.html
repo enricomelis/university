@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Grafici di funzione</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <canvas id="canvas" width="600" height="400"></canvas>
+    <script>
+  const canvas = document.getElementById('canvas').getContext('2d')
+  canvas.translate(300,200)
+  canvas.beginPath()
+  canvas.moveTo(-300,0)
+  canvas.lineTo(300,0)
+  canvas.moveTo(0,-200)
+  canvas.lineTo(0,200)
+  canvas.closePath()
+  canvas.stroke()
+  canvas.scale(6,-6)
+  canvas.fillStyle='#000080'
+  canvas.strokeStyle='#800000'
+
+  const punto = (x,y) => {
+    const s=0.5
+    canvas.fillRect(x-s/2,y-s/2,s,s)
+  }
+
+  const linea = (x0,y0,x1,y1) => {
+    canvas.beginPath()
+    canvas.moveTo(x0,y0)
+    canvas.lineTo(x1,y1)
+    canvas.stroke()
+    canvas.closePath()
+  }
+
+  const colore = (c) => {
+    canvas.fillStyle = c
+    canvas.strokeStyle = c
+  }
+    </script>
+    <div id="output">
+            <h3>Console</h3>
+            <textarea cols=130 rows=10 id="console"></textarea>
+    </div>
+    <script src="js/script.js"></script>
+  </body>
+</html>

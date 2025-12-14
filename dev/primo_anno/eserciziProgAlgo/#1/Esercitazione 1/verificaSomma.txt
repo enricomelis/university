@@ -1,0 +1,10 @@
+function verificaSomma(A){
+    var som:Int;
+    for(var i:Int = 0; i < 3; i = i + 1){
+        som = som + A[i];
+        if(i != 0){
+            if(A[i] != som) {return false; }
+        }
+    }
+    return true;
+}

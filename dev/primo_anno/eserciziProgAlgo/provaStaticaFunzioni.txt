@@ -1,9 +1,0 @@
-// frammento di codice staticamente corretto.
-
-const actual:Int = 3;
-function esempio(const param:Int) -> Bool {
-    var x:Bool = false;
-    x = true;
-    return x;
-}
-const call:Bool = esempio(actual);

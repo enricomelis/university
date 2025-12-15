@@ -1,9 +1,0 @@
-{
-    "grades": [
-        {"name":"Melis","credits":9,"date":"13 Dicembre 2024","grade":30,"honors":true},
-        {"name":"Leone","credits":15,"date":"13 Marzo 2025","grade":28,"honors":false},
-        {"name":"Pagani","credits":9,"date":"13 Dicembre 2024","grade":26,"honors":false},
-        {"name":"Nannicini","credits":12,"date":"28 Gennaio 2025","grade":22,"honors":false}
-    ],
-    "totalCredits": 180
-}

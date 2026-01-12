@@ -110,6 +110,7 @@ clean:
 	@echo "Cleaning up generated files..."
 	rm -f *.o $(C_TARGET)
 	rm -f $(JAVA_SRCS:.java=.class)
+	rm -rf main.dSYM
 	@echo "Cleanup complete."
 
 .PHONY: run run-c debug debug-c clean run-python run-js run-java

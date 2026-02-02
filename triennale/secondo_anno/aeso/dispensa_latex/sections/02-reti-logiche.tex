@@ -1,0 +1,86 @@
+\section{Reti Logiche}
+Le reti logiche sono dei circuiti che elaborano segnali logici booleani tramite la composizione dei gate logici fondamentali. Possono essere usate per calcolare funzioni o per memorizzare segnali.
+
+\subsection{Reti logiche combinatorie}
+Le reti logiche combinatorie sono quei circuiti logici che permettono di modellare delle relazioni di input-output. La procedura standard per creare una rete logica combinatoria è:
+\begin{enumerate}
+    \item Descrizione della funzione
+    \item Tabella di verità
+    \item Formula (somma di prodotti)
+    \item Rete di porte
+\end{enumerate}
+
+dove con "somma di prodotti" si intende la scrittura della tabella di verità sotto forma di AND e OR, che sono rappresentabili rispettivamente come prodotti e somme.
+
+\paragraph{Primo esempio di rete combinatoria: Full Adder a 1 bit} Vogliamo creare una rete che permetta di sommare due bit, producendo un riporto.
+
+\begin{itemize}
+    \item Input: bit x, bit y, riporto in ingresso 
+    \item Output: bit z, riporto in uscita
+\end{itemize}
+
+\textbf{Descriviamo la funzione}.
+Vogliamo una funzione che faccia la somma di due bit, prendendo in ingresso un bit di riporto e che sia in grado di produrre un bit di riporto in uscita (per composizionalità).
+
+\textbf{Creiamo la tabella di verità}.
+\[
+\begin{array}{ccc|cc}
+\toprule
+x & y & c_{\text{in}} & z & c_{\text{out}} \\
+\midrule
+0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 1 & 1 & 0 \\
+0 & 1 & 0 & 1 & 0 \\
+0 & 1 & 1 & 0 & 1 \\
+1 & 0 & 0 & 1 & 0 \\
+1 & 0 & 1 & 0 & 1 \\
+1 & 1 & 0 & 0 & 1 \\
+1 & 1 & 1 & 1 & 1 \\
+\bottomrule
+\end{array}
+\]
+
+\textbf{Scriviamo la formula come somma di prodotti}. Per farlo, individuiamo nella
+tabella di verità tutte le righe in cui l'uscita vale \(1\), separatamente per \(z\) e per
+\(c_{\text{out}}\).
+
+Nel caso di \(z\), l'uscita vale \(1\) nella seconda, terza, quinta e ottava riga.
+Da ciascuna di queste righe costruiamo un \emph{prodotto} (AND) tra \(x\), \(y\) e
+\(c_{\text{in}}\) che risulta vero solo per quella combinazione di ingressi:
+se in una riga un ingresso vale \(0\), usiamo la variabile negata; se vale \(1\),
+usiamo la variabile non negata. Infine facciamo l'OR (somma) di tutti questi prodotti,
+così che \(z\) valga \(1\) ogni volta che si verifica almeno una delle righe
+selezionate.
+
+\[
+z =
+    \overline{x} \cdot \overline{y} \cdot c_{\text{in}} +
+    \overline{x} \cdot y \cdot \overline{c_{\text{in}}} +
+    x \cdot \overline{y} \cdot \overline{c_{\text{in}}} +
+    x \cdot y \cdot c_{\text{in}}
+\]
+
+In questo modo, la formula di \(z\) rappresenta esattamente tutte le combinazioni
+di input per cui \(z = 1\).
+Facciamo la stessa cosa per \(c_{\text{out}}\), sommando (in OR) i prodotti costruiti
+a partire dalle righe in cui \(c_{\text{out}} = 1\):
+
+\[
+c_{\text{out}} =
+x \cdot y \cdot \overline{c_{\text{in}}} +
+x \cdot \overline{y} \cdot c_{\text{in}} +
+\overline{x} \cdot y \cdot c_{\text{in}} +
+x \cdot y \cdot c_{\text{in}}
+\]
+
+\subsection{Ottimizzazione nella logica combinatoria}
+\subsection{Verilog}
+\subsection{Reti logiche sequenziali}
+\subsubsection{Automi di Mealy}
+\subsubsection{Automi di Moore}
+\subsection{Componenti standard}
+\subsubsection{Full Adder}
+\subsubsection{Mux e Demux}
+\subsubsection{Comparatore}
+\subsubsection{Shifter}
+\subsubsection{Encoder e Decoder}

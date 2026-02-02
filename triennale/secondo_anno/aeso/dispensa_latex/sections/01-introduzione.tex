@@ -1,0 +1,80 @@
+\section{Introduzione al corso}
+\subsection{Livelli di astrazione}
+Come possiamo vedere anche nel libro \cite{arch}, arriviamo ai sistemi operativi partendo da concetti molti più bassi.
+
+\includegraphics[scale=0.5]{livelli_astrazione}
+
+Tralasciando la fisica e accennando la parte sui transistor, iniziamo il nostro cammino di astrazione con la reti logiche.
+I livelli di astrazione trattati sono (con alcuni esempi):
+\begin{itemize}
+    \item Sistema Operativo (driver dei dispositivi)
+    \item Architettura (istruzioni assembler, registri)
+    \item Microarchitettura (datapath)
+    \item Blocchi logici (sommatori, memorie)
+    \item Reti digitali (gate logici AND, OR)
+\end{itemize}
+
+I livelli di astrazioni sono fondamentali per comprendere come funzionano tutte le componenti che diamo per scontato, costruendole man mano dal basso e incrementando la complessità. 
+
+\subsection{Nozioni sui transistor}
+\textit{(In italiano vengono chiamati "transistori", ma mi rifiuto)}.
+I transistor sono, al giorno d'oggi, l'unità di misura principale per gli effettivi calcoli all'interno dei calcolatori. I primi calcolatori sono stati costruiti con degli ingranaggi, adesso si utilizzano i transistor che si dividono in:
+\begin{itemize}
+    \item BJT: \textit{Bipolar Junction Transistors}
+    \item MOS: \textit{Metal-Oxide-Semiconductor Field Effect Transistor (MOSFET)}
+\end{itemize}
+
+I transistor MOS sono costruiti partendo dal silicio (Si, IV gruppo), che forma 4 legami covalenti. Per aumentare la conduttività vengono aggiunti degli atomi droganti, che possono essere del V gruppo (arsenico) o del III (boro). Dato che l'arseno "ha un elettrone in più" e porta una carica negativa, viene chiamato drogante di tipo \textbf{n}, mentre il boro "porta una carica positiva" \footnote{Spero che chimica, fisici e ingegneri elettronici mi risparmieranno per questo scempio che ho appena scritto però rende l'idea.} e quindi viene chiamato drogante di tipo \textbf{p}.
+
+\begin{center}
+    \textbf{** Work in progress **}    
+\end{center}
+
+\subsection{Logica booleana}
+La logica booleana \footnote{George Boole (1815 – 1864) è stato un matematico e logico inglese.} è quella sottosezione dell'algebra in cui le variabili possono avere solamente valori binari, cioè $x \in \set{0, 1}$ oppure in senso astratto \textit{vero} o \textit{falso}. Le basi si fondando sui gate logici $\operatorname{AND} (\land, \cdot), \operatorname{OR} (\lor, +), \operatorname{NOT} (\lnot, \overline{x})$ che sono realizzabili tramite transistor.
+
+Queste sono le tabelle di verità per i gate logici appena menzionati:
+\[
+\begin{array}{c@{\qquad}c@{\qquad}c}
+% AND
+\begin{array}{c c|c}
+p & q & p \cdot q\\
+\hline
+0 & 0 & 0\\
+
+0 & 1 & 0\\
+1 & 0 & 0\\
+1 & 1 & 1
+\end{array}
+&
+% OR
+\begin{array}{c c|c}
+p & q & p + q\\
+\hline
+0 & 0 & 0\\
+0 & 1 & 1\\
+1 & 0 & 1\\
+1 & 1 & 1
+\end{array}
+&
+% NOT
+\begin{array}{c|c}
+p & \overline{p}\\
+\hline
+0 & 1\\
+1 & 0
+\end{array}
+\end{array}
+\]
+
+Per avere una rappresentazione visiva di come sono realizzabili tramite transistor, ci basti pensare che per ottenere un AND basta mettere due transistor in sequenza, per l'OR basta metterli in parallelo e per il NOT basta invertire il segnale in input. Di seguito delle illustrazioni prese da Wikipedia.
+
+\begin{center}
+\includegraphics[scale=0.6]{and_gate_wikipedia}
+\includegraphics[scale=0.6]{or_gate_wikipedia}    
+\end{center}
+
+\subsubsection{Composizionalità}
+È importante tenere a mente che questi tre gate logici sono i veri gate fondamentali. Spesso si possono trovare altri gate categorizzati in questo modo ma lo sono soltamto per astrazione, dato che tutti i circuiti logici sono costruibili tramite questi 3. Ad esempio, il gate XOR è spesso considerato tra i fondamentali però non è altro che una composizione in formula dei precedenti tre già citati. La formula logica per lo XOR infatti è $A \oplus B = ( (A \land \lnot B) \lor (\lnot A \land B) )$.
+Capire questo è fondamentale sia per capire i livelli di astrazione (l'esempio dello XOR serve a capire quanto sia utilizzato e quanto possa essere utile astrarre la sua composizione per comodità) e il concetto di ritardo dei segnali. Ogni gate logico ha bisogno di un certo tempo $\Delta t$ per stabilizzarsi e in base a come componiamo i vari gate questi tempi si sommano.
+La composizionalità è fondamentale anche per capire il concetto di \textit{modularità}, fondamentale nella filosofia UNIX.

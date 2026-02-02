@@ -3,7 +3,7 @@
 [![LuaLaTeX](https://img.shields.io/badge/LuaLaTeX-blue)](https://www.luatex.org/)
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
-Notes for the *Architetture e Sistemi Operativi* course (2025-2026).
+Notes for the _Architetture e Sistemi Operativi_ course (2025-2026).
 
 ---
 
@@ -28,7 +28,7 @@ Notes for the *Architetture e Sistemi Operativi* course (2025-2026).
 
 ## Overview
 
-This repository contains LaTeX notes for the **Architetture e Sistemi Operativi** (AESO) course at Politecnico di Torino, covering:
+This repository contains LaTeX notes for the **Architetture e Sistemi Operativi** (AESO) course at Uni Pisa covering:
 
 1. **Introduzione** - Introduction to computer architecture fundamentals
 2. **Reti Logiche** - Logic networks and digital circuits
@@ -80,18 +80,18 @@ make watchview
 
 ### Available Targets
 
-| Target | Description |
-|--------|-------------|
-| `make tools` | Check all required tools are available |
-| `make pdf` | Build PDF with latexmk |
-| `make view` | Build PDF and open in Skim |
-| `make reopen` | Close Skim, rebuild, and reopen (useful after adding new files) |
-| `make watch` | Continuous build mode (latexmk -pvc) |
-| `make watchview` | Build + open PDF + continuous build |
-| `make skim-close` | Close the PDF in Skim (helper target) |
-| `make clean` | Remove intermediates (keeps PDF) |
-| `make distclean` | Clean everything including build/ directory |
-| `make flatten` | Generate `flattened.tex` (single file version) |
+| Target            | Description                                                     |
+| ----------------- | --------------------------------------------------------------- |
+| `make tools`      | Check all required tools are available                          |
+| `make pdf`        | Build PDF with latexmk                                          |
+| `make view`       | Build PDF and open in Skim                                      |
+| `make reopen`     | Close Skim, rebuild, and reopen (useful after adding new files) |
+| `make watch`      | Continuous build mode (latexmk -pvc)                            |
+| `make watchview`  | Build + open PDF + continuous build                             |
+| `make skim-close` | Close the PDF in Skim (helper target)                           |
+| `make clean`      | Remove intermediates (keeps PDF)                                |
+| `make distclean`  | Clean everything including build/ directory                     |
+| `make flatten`    | Generate `flattened.tex` (single file version)                  |
 
 ### Options
 
@@ -142,6 +142,7 @@ require('lspconfig').texlab.setup({
 ### SyncTeX Integration
 
 **Forward search** (source → PDF):
+
 ```lua
 -- Add to your Neovim config
 vim.keymap.set('n', '<leader>lf', function()
@@ -157,6 +158,7 @@ end, { buffer = true, desc = 'Forward search to Skim' })
 ```
 
 **Inverse search** (PDF → source):
+
 - Skim → Preferences → Sync
 - Set PDF-TeX Sync support to "Custom"
 - Command: `nvim`
@@ -210,12 +212,14 @@ end, { buffer = true, desc = 'Forward search to Skim' })
 - [ ] **Editor Integration** - Enable ChKTeX in TexLab LSP or configure Neovim to run `make lint` on save
 
 **Using ChKTeX:**
+
 ```bash
 # Run linting (requires chktex to be installed)
 make lint
 ```
 
 **Configuration:**
+
 - TexLab LSP: Set `texlab.chktex.onEdit = true` in your Neovim config
 - Flags: Configurable via `CHKTEXFLAGS` (default: `-q -v 0` for quiet mode)
 

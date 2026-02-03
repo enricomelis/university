@@ -2,27 +2,34 @@
 Le reti logiche sono dei circuiti che elaborano segnali logici booleani tramite la composizione dei gate logici fondamentali. Possono essere usate per calcolare funzioni o per memorizzare segnali.
 
 \subsection{Reti logiche combinatorie}
-Le reti logiche combinatorie sono quei circuiti logici che permettono di modellare delle relazioni di input-output. La procedura standard per creare una rete logica combinatoria è:
+\label{subsec:reti-comb}
+
+Le reti logiche combinatorie modellano relazioni ingresso-uscita senza memoria: l'output dipende \emph{solo} dagli input presenti. La progettazione segue un flusso standard:
+
 \begin{enumerate}
-    \item Descrizione della funzione
-    \item Tabella di verità
-    \item Formula (somma di prodotti)
-    \item Rete di porte
+    \item Descrizione della funzione booleana
+    \item Costruzione della tabella di verità
+    \item Derivazione dell'espressione logica (forma SOP -- \textit{sum of products})
+    \item Sintesi della rete di porte
 \end{enumerate}
 
-dove con "somma di prodotti" si intende la scrittura della tabella di verità sotto forma di AND e OR, che sono rappresentabili rispettivamente come prodotti e somme.
+Con ``somma di prodotti'' (SOP) si intende la scrittura della funzione come OR (somma) di termini AND (prodotti), derivati direttamente dalle righe della tabella di verità in cui l'uscita vale~1.
 
-\paragraph{Primo esempio di rete combinatoria: Full Adder a 1 bit} Vogliamo creare una rete che permetta di sommare due bit, producendo un riporto.
+\subsubsection*{Esempio: progettazione di un Full Adder a 1 bit}
+\label{subsec:fa1-progetto}
 
+Il \textit{Full Adder} è un circuito combinatorio che somma due bit $x$ e $y$ insieme a un riporto in ingresso $c_{\text{in}}$, producendo una somma $z$ e un riporto in uscita $c_{\text{out}}$.
+
+\paragraph{Specifica del problema.}
 \begin{itemize}
-    \item Input: bit x, bit y, riporto in ingresso 
-    \item Output: bit z, riporto in uscita
+    \item \textbf{Input:} bit $x$, bit $y$, riporto in ingresso $c_{\text{in}}$
+    \item \textbf{Output:} bit somma $z$, riporto in uscita $c_{\text{out}}$
 \end{itemize}
 
-\textbf{Descriviamo la funzione}.
-Vogliamo una funzione che faccia la somma di due bit, prendendo in ingresso un bit di riporto e che sia in grado di produrre un bit di riporto in uscita (per composizionalità).
+\paragraph{Descrizione della funzione.}
+L'obiettivo è realizzare un sommatore completo a 1 bit: dati due bit da sommare e un eventuale riporto proveniente da una somma precedente (per composizionalità in somme multi-bit), il circuito deve calcolare il bit di somma e il nuovo riporto da propagare.
 
-\textbf{Creiamo la tabella di verità}.
+\paragraph{Costruzione della tabella di verità.}
 \[
 \begin{array}{ccc|cc}
 \toprule
@@ -40,38 +47,40 @@ x & y & c_{\text{in}} & z & c_{\text{out}} \\
 \end{array}
 \]
 
-\textbf{Scriviamo la formula come somma di prodotti}. Per farlo, individuiamo nella
-tabella di verità tutte le righe in cui l'uscita vale \(1\), separatamente per \(z\) e per
-\(c_{\text{out}}\).
+\paragraph{Derivazione della forma canonica SOP.}
+Per ottenere l'espressione booleana, individuiamo nella tabella di verità tutte le righe in cui l'uscita vale~1, separatamente per~$z$ e per~$c_{\text{out}}$.
 
-Nel caso di \(z\), l'uscita vale \(1\) nella seconda, terza, quinta e ottava riga.
-Da ciascuna di queste righe costruiamo un \emph{prodotto} (AND) tra \(x\), \(y\) e
-\(c_{\text{in}}\) che risulta vero solo per quella combinazione di ingressi:
-se in una riga un ingresso vale \(0\), usiamo la variabile negata; se vale \(1\),
-usiamo la variabile non negata. Infine facciamo l'OR (somma) di tutti questi prodotti,
-così che \(z\) valga \(1\) ogni volta che si verifica almeno una delle righe
-selezionate.
+Per la somma~$z$, l'uscita vale~1 nella seconda, terza, quinta e ottava riga. Da ciascuna riga costruiamo un \emph{mintermine} (prodotto logico) delle variabili di ingresso: se un ingresso vale~0 usiamo la forma negata, se vale~1 la forma diretta. La somma (OR) di tutti i mintermini produce l'espressione per~$z$:
 
-\[
-z =
-    \overline{x} \cdot \overline{y} \cdot c_{\text{in}} +
-    \overline{x} \cdot y \cdot \overline{c_{\text{in}}} +
-    x \cdot \overline{y} \cdot \overline{c_{\text{in}}} +
-    x \cdot y \cdot c_{\text{in}}
-\]
+\begin{equation}
+\label{eq:z-sop}
+z = \overline{x} \cdot \overline{y} \cdot c_{\text{in}} + \overline{x} \cdot y \cdot \overline{c_{\text{in}}} + x \cdot \overline{y} \cdot \overline{c_{\text{in}}} + x \cdot y \cdot c_{\text{in}}
+\end{equation}
 
-In questo modo, la formula di \(z\) rappresenta esattamente tutte le combinazioni
-di input per cui \(z = 1\).
-Facciamo la stessa cosa per \(c_{\text{out}}\), sommando (in OR) i prodotti costruiti
-a partire dalle righe in cui \(c_{\text{out}} = 1\):
+L'Equazione~\ref{eq:z-sop} elenca tutte e sole le combinazioni di input per cui $z = 1$.
 
-\[
-c_{\text{out}} =
-x \cdot y \cdot \overline{c_{\text{in}}} +
-x \cdot \overline{y} \cdot c_{\text{in}} +
-\overline{x} \cdot y \cdot c_{\text{in}} +
-x \cdot y \cdot c_{\text{in}}
-\]
+Procediamo analogamente per il riporto in uscita $c_{\text{out}}$, sommando i mintermini relativi alle righe in cui $c_{\text{out}} = 1$:
+
+\begin{equation}
+\label{eq:cout-sop}
+c_{\text{out}} = x \cdot y \cdot \overline{c_{\text{in}}} + x \cdot \overline{y} \cdot c_{\text{in}} + \overline{x} \cdot y \cdot c_{\text{in}} + x \cdot y \cdot c_{\text{in}}
+\end{equation}
+
+\paragraph{Sintesi della rete di porte.}
+A partire dalle espressioni SOP (Equazioni~\ref{eq:z-sop} e~\ref{eq:cout-sop}), la sintesi circuitale procede come segue:
+\begin{enumerate}
+    \item Creare una linea verticale per ogni segnale di ingresso ($x$, $y$, $c_{\text{in}}$) e le rispettive negazioni.
+    \item Realizzare ciascun prodotto con una porta AND a tre ingressi, collegando le linee corrette (dirette o negate).
+    \item Collegare le uscite delle porte AND agli ingressi di una porta OR per ciascun output.
+    \item L'uscita della porta OR corrisponde al segnale di output finale ($z$ o $c_{\text{out}}$).
+\end{enumerate}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[scale=0.4]{reti_comb_fa1.png}
+    \caption{Implementazione circuitale del Full Adder a 1 bit: le linee verticali rappresentano i segnali di ingresso $x$, $y$ e $c_{\text{in}}$ (con le relative negazioni); le porte AND realizzano i prodotti della forma SOP (Equazione~\ref{eq:z-sop} per la somma, Equazione~\ref{eq:cout-sop} per il riporto); le porte OR combinano i prodotti per produrre le uscite finali $z$ e $c_{\text{out}}$.}
+    \label{fig:fa1}
+\end{figure}
 
 \subsection{Ottimizzazione nella logica combinatoria}
 \subsection{Verilog}

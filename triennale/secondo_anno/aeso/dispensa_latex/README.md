@@ -111,64 +111,24 @@ make view VIEWER_APP=Preview
 
 1. **Install TexLab**: `brew install texlab` or download from [GitHub releases](https://github.com/latex-lsp/texlab/releases)
 
-2. **LSP Configuration** (using `nvim-lspconfig`):
+2. **LSP Configuration** (using `LazyVim`):
 
 ```lua
-require('lspconfig').texlab.setup({
-  settings = {
-    texlab = {
-      build = {
-        executable = 'latexmk',
-        args = { '-pdf', '-interaction=nonstopmode', '-synctex=1', '%f' },
-        forwardSearchAfter = false,
-        onSave = false,
-      },
-      chktex = {
-        onOpenAndSave = false,
-        onEdit = false,
-      },
-      diagnosticsDelay = 300,
-      formatterLineLength = 80,
-      latexFormatter = 'latexindent',
-      latexindent = {
-        modifyLineBreaks = false,
-      },
-      bibtexFormatter = 'texlab',
-    },
-  },
-})
+return {
+  "lervag/vimtex",
+  lazy = false,
+  -- tag = "v2.15",
+  init = function()
+    vim.g.vimtex_view_method = "zathura"
+  end,
+}
 ```
-
-### SyncTeX Integration
-
-**Forward search** (source → PDF):
-
-```lua
--- Add to your Neovim config
-vim.keymap.set('n', '<leader>lf', function()
-  local filename = vim.fn.expand('%:p')
-  local line = vim.fn.line('.')
-  local cmd = string.format(
-    'osascript -e \'tell application "Skim" to open POSIX file "%s"\' -e \'tell application "Skim" to go to line %d of document 1\'',
-    vim.fn.expand('%:p:r') .. '.pdf',
-    line
-  )
-  vim.fn.system(cmd)
-end, { buffer = true, desc = 'Forward search to Skim' })
-```
-
-**Inverse search** (PDF → source):
-
-- Skim → Preferences → Sync
-- Set PDF-TeX Sync support to "Custom"
-- Command: `nvim`
-- Arguments: `--servername /tmp/nvim --remote +"%line" "%file"`
 
 ---
 
 ## Project Structure
 
-```
+```text
 .
 ├── main.tex                  # Main document entry point
 ├── preamble.tex              # Package imports and configuration

@@ -1,0 +1,5 @@
+# Ignore everything in build directory
+build/*
+
+# Except the main PDF output
+!build/main.pdf

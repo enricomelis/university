@@ -84,6 +84,7 @@ make tools
 - Include with: `\includegraphics[scale=0.5]{filename}` (no extension)
 - Set graphics path in main.tex: `\graphicspath{ {./figures/} }`
 - Multiple figures side by side: use `center` environment
+- Use [htbp] as the default float placement specifier
 
 ### Citations and References
 
@@ -150,7 +151,7 @@ p & q & p \cdot q \\
 2. Build with `make pdf` or `make view` for also opening the pdf
 3. View in Skim (auto-refresh configured in .latexmkrc)
 4. Use `make flatten` before submitting to create standalone file
-5. Neven push before the use of `make clean`, files are generated in the build process and should never be pushed
+5. Never push before the use of `make clean`, files are generated in the build process and should never be pushed
 
 ## Dependencies
 

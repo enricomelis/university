@@ -1,0 +1,13 @@
+{
+    "name": "Laboratorio2-Primo",
+    "image": "mcr.microsoft.com/devcontainers/cpp:1-ubuntu-24.04",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode.cpptools-extension-pack",
+                "ms-vscode.makefile-tools",
+                "asvetliakov.vscode-neovim"
+            ]
+        }
+    }
+}
